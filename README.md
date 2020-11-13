@@ -17,3 +17,5 @@
 	        implementation 'com.github.liweihua802:kotlin-base:0.01'
 	}
 ```
+
+## 屏幕适配目前自己使用ScreenMatch插件，参考ScreenMatch.txt
