@@ -26,13 +26,13 @@ class RecyclerAdapter<T, DB : ViewDataBinding>(
      * 添加数据，用于分页加载
      * [list]要添加的数据
      * [firstPage]当前是否第一页
-     * [isOver]是否全部加载完成
+     * [hasMore]是否还有更多
      */
-    fun setList(list: Collection<T>?, firstPage: Boolean, isOver: Boolean = true) {
+    fun setList(list: Collection<T>?, firstPage: Boolean, hasMore: Boolean = false) {
         if (firstPage) setList(list) else addData(list ?: emptyList())
         loadMoreModule.run {
             if (isEnableLoadMore) {
-                if (isOver) loadMoreEnd() else loadMoreComplete()
+                if (hasMore) loadMoreComplete() else loadMoreEnd()
             }
         }
     }
