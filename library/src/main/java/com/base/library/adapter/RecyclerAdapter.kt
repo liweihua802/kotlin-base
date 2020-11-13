@@ -28,7 +28,7 @@ class RecyclerAdapter<T, DB : ViewDataBinding>(
      * [firstPage]当前是否第一页
      * [hasMore]是否还有更多
      */
-    fun setList(list: Collection<T>?, firstPage: Boolean, hasMore: Boolean = false) {
+    fun setList(list: Collection<T>?, firstPage: Boolean = true, hasMore: Boolean = false) {
         if (firstPage) setList(list) else addData(list ?: emptyList())
         loadMoreModule.run {
             if (isEnableLoadMore) {

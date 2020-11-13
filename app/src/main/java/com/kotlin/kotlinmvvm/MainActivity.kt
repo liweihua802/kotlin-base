@@ -3,9 +3,12 @@ package com.kotlin.kotlinmvvm
 import android.widget.Toast
 import com.base.library.adapter.RecyclerAdapter
 import com.base.library.ui.BaseActivity
+import com.base.library.utils.toast
 import com.kotlin.kotlinmvvm.databinding.ActivityMainBinding
 import com.kotlin.kotlinmvvm.databinding.ItemArticleBinding
 import com.kotlin.kotlinmvvm.logic.model.Article
+import com.kotlin.kotlinmvvm.logic.model.ArticlePage
+import com.kotlin.kotlinmvvm.logic.network.WanResult
 
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -21,18 +24,20 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onCreate() {
         enableLoadMore(adapter)
-        vm.getArticlePage().observe(this) {
-            if (it.errorCode == 0) {
-                page++
-                val articlePage = it.data!!
-                adapter.setList(articlePage.datas, articlePage.curPage == 1, articlePage.over)
-            } else {
-                adapter.loadMoreModule.loadMoreFail()
-                Toast.makeText(this, it.errorMsg, Toast.LENGTH_SHORT).show()
-            }
-            if (page == 1) finishRefresh(it.errorCode == 0)
-        }
+        vm.getArticlePage().observe(this, this::onGetArticle)
         onRefresh()
+    }
+
+    private fun onGetArticle(result: WanResult<ArticlePage>) {
+        if (page == 0) finishRefresh(result.errorCode == 0)
+        if (result.errorCode == 0) {
+            page++
+            val articlePage = result.data!!
+            adapter.setList(articlePage.datas, articlePage.curPage == 1, !articlePage.over)
+        } else {
+            adapter.loadMoreModule.loadMoreFail()
+            toast(result.errorMsg)
+        }
     }
 
     override fun onRefresh() {
