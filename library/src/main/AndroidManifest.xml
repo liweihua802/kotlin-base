@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.base.library">
+    <!--网络请求权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--如果用户从断开的网络状态变为已连接的网络状态，则允许Glide监视连接状态并重新启动失败的请求。-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+</manifest>
